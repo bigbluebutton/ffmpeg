@@ -28,33 +28,33 @@ Build-Depends:
 # for build-profile support
  dpkg-dev (>= 1.17.14),
 # --enable-libflite
- flite1-dev,
+# flite1-dev,
 # --enable-frei0r
- frei0r-plugins-dev <!pkg.ffmpeg.stage1>,
+# frei0r-plugins-dev <!pkg.ffmpeg.stage1>,
 # --enable-ladspa
- ladspa-sdk,
+# ladspa-sdk,
 # --enable-libaom
- libaom-dev,
+# libaom-dev,
 # --enable-libaribb24
- libaribb24-dev,
+# libaribb24-dev,
 # --enable-libass
- libass-dev,
+# libass-dev,
 # --enable-libbluray
- libbluray-dev,
+# libbluray-dev,
 # --enable-libbs2b
- libbs2b-dev,
+# libbs2b-dev,
 # autodetected: external library 'bzlib'
  libbz2-dev,
 # --enable-libcaca
- libcaca-dev,
+# libcaca-dev,
 # --enable-libcdio
- libcdio-paranoia-dev,
+# libcdio-paranoia-dev,
 # --enable-libchromaprint
- libchromaprint-dev <!pkg.ffmpeg.stage1>,
+# libchromaprint-dev <!pkg.ffmpeg.stage1>,
 # --enable-libcodec2
- libcodec2-dev,
+# libcodec2-dev,
 # --enable-libdc1394
- libdc1394-22-dev [linux-any],
+# libdc1394-22-dev [linux-any],
 # --enable-libdrm
  libdrm-dev [linux-any],
 # --enable-libfontconfig
@@ -64,45 +64,45 @@ Build-Depends:
 # --enable-fribidi
  libfribidi-dev,
 # --enable-opengl
- libgl1-mesa-dev,
+# libgl1-mesa-dev,
 # --enable-libgme
- libgme-dev,
+# libgme-dev,
 # --enable-gnutls
  libgnutls28-dev | libgnutls-dev,
 # --enable-libgsm
- libgsm1-dev,
+# libgsm1-dev,
 # Fails to be detected by configure script, if not also libavc1394-dev is installed.
 # --enable-libiec61883
- libiec61883-dev [linux-any],
- libavc1394-dev [linux-any],
+# libiec61883-dev [linux-any],
+# libavc1394-dev [linux-any],
 # --enable-libjack
- libjack-jackd2-dev,
+# libjack-jackd2-dev,
 # --enable-liblensfun (used only in -extra flavor)
- liblensfun-dev,
+# liblensfun-dev,
 # --enable-lv2
- liblilv-dev,
+# liblilv-dev,
 # autodetected for the tiff decoder
  liblzma-dev,
 # --enable-libmp3lame
  libmp3lame-dev,
 # --enable-libmysofa
- libmysofa-dev,
+# libmysofa-dev,
 # --enable-openal
- libopenal-dev,
+# libopenal-dev,
 # --enable-omx
- libomxil-bellagio-dev,
+# libomxil-bellagio-dev,
 # --enable-libopencore_amrnb
- libopencore-amrnb-dev,
+# libopencore-amrnb-dev,
 # --enable-libopencore_amrwb
- libopencore-amrwb-dev,
+# libopencore-amrwb-dev,
 # --enable-libopenjpeg
- libopenjp2-7-dev (>= 2.1),
+# libopenjp2-7-dev (>= 2.1),
 # --enable-libopenmpt
- libopenmpt-dev,
+# libopenmpt-dev,
 # --enable-libopus
  libopus-dev,
 # --enable-libpulse
- libpulse-dev,
+# libpulse-dev,
 # --enable-librubberband
  librubberband-dev,
 # --enable-librsvg
@@ -112,21 +112,21 @@ Build-Depends:
 # --enable-sdl2
  libsdl2-dev,
 # --enable-libshine
- libshine-dev (>= 3.0.0),
+# libshine-dev (>= 3.0.0),
 # --enable-libsnappy
- libsnappy-dev,
+# libsnappy-dev,
 # --enable-libsoxr
- libsoxr-dev,
+# libsoxr-dev,
 # --enable-libspeex
  libspeex-dev,
 # --enable-libssh
- libssh-gcrypt-dev,
+# libssh-gcrypt-dev,
 # --enable-libtesseract (used only in -extra flavor)
- libtesseract-dev,
+# libtesseract-dev,
 # --enable-libtheora
- libtheora-dev,
+# libtheora-dev,
 # --enable-libtwolame
- libtwolame-dev,
+# libtwolame-dev,
 # This is not necessary, see explanation in debian/rules.
 # # --enable-libv4l2
 # libv4l-dev [!hurd-any],
@@ -135,21 +135,21 @@ Build-Depends:
 # autodetected: hwaccels 'h263_vdpau, mpeg2_vdpau, vc1_vdpau, h264_vdpau, mpeg4_vdpau, wmv3_vdpau, mpeg1_vdpau', decoders 'h264_vdpau, mpeg1_vdpau, mpeg4_vdpau, mpeg_vdpau, vc1_vdpau, wmv3_vdpau'
  libvdpau-dev,
 # --enable-libvidstab
- libvidstab-dev,
+# libvidstab-dev,
 # --enable-libvo_amrwbenc
- libvo-amrwbenc-dev,
+# libvo-amrwbenc-dev,
 # --enable-libvorbis
  libvorbis-dev,
 # --enable-libvpx
  libvpx-dev,
 # --enable-libwavpack
- libwavpack-dev,
+# libwavpack-dev,
 # --enable-libwebp
- libwebp-dev,
+# libwebp-dev,
 # --enable-libx264
  libx264-dev <!pkg.ffmpeg.stage1>,
 # --enable-libx265
- libx265-dev (>= 1.8),
+# libx265-dev (>= 1.8),
 # autodetected libxcb-shape
  libxcb-shape0-dev,
 # autodetected libxcb-shm
@@ -161,13 +161,13 @@ Build-Depends:
 # autodetected xlib
  libxv-dev,
 # --enable-libxvid
- libxvidcore-dev,
+# libxvidcore-dev,
 # autodetected: decoder 'mpeg_xvmc'; outdev 'xv'
  libxvmc-dev,
 # --enable-libzmq
- libzmq3-dev,
+# libzmq3-dev,
 # --enable-libzvbi
- libzvbi-dev,
+# libzvbi-dev,
 # The opencl API is considered experimental.
 # # --enable-opencl
 # ocl-icd-opencl-dev [!hurd-any] | opencl-dev [!hurd-any],
@@ -248,61 +248,61 @@ Description: FFmpeg library with de/encoders for audio/video codecs - runtime fi
  .
  This package contains the runtime files.
 
-Package: libavcodec-extra58
-Architecture: any
-Section: libs
-Multi-Arch: same
-Conflicts: libavcodec58
-Provides:
- libavcodec58 (= ${binary:Version}),
- libavcodec-extra
-Pre-Depends:
- ${misc:Pre-Depends}
-Depends:
- ${shlibs:Depends},
- ${misc:Depends}
-Description: FFmpeg library with additional de/encoders for audio/video codecs
- FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
- mux, demux, stream, filter and play pretty much anything that humans and
- machines have created. It supports the most obscure ancient formats up to the
- cutting edge.
- .
- This library provides a generic encoding/decoding framework and
- contains multiple decoders and encoders for audio, video and subtitle streams,
- and several bitstream filters.
- .
- The shared architecture provides various services ranging from bit stream I/O
- to DSP optimizations, and makes it suitable for implementing robust and fast
- codecs as well as for experimentation.
- .
- This package replaces the libavcodec58 package and contains the
- following additional codecs:
- .
-  * ARIB STD-B24 Captions (Subtitle Decoder)
-  * OpenCORE Adaptive Multi-Rate (AMR) Narrow-Band (Encoder/Decoder)
-  * OpenCORE Adaptive Multi-Rate (AMR) Wide-Band (Decoder)
-  * Android VisualOn Adaptive Multi-Rate (AMR) Wide-Band (Encoder)
- .
- Because this package links against libraries that are licensed under
- Apache License 2.0, the resulting binaries are distributed under the
- GPL version 3 or later.
+#Package: libavcodec-extra58
+#Architecture: any
+#Section: libs
+#Multi-Arch: same
+#Conflicts: libavcodec58
+#Provides:
+# libavcodec58 (= ${binary:Version}),
+# libavcodec-extra
+#Pre-Depends:
+# ${misc:Pre-Depends}
+#Depends:
+# ${shlibs:Depends},
+# ${misc:Depends}
+#Description: FFmpeg library with additional de/encoders for audio/video codecs
+# FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
+# mux, demux, stream, filter and play pretty much anything that humans and
+# machines have created. It supports the most obscure ancient formats up to the
+# cutting edge.
+# .
+# This library provides a generic encoding/decoding framework and
+# contains multiple decoders and encoders for audio, video and subtitle streams,
+# and several bitstream filters.
+# .
+# The shared architecture provides various services ranging from bit stream I/O
+# to DSP optimizations, and makes it suitable for implementing robust and fast
+# codecs as well as for experimentation.
+# .
+# This package replaces the libavcodec58 package and contains the
+# following additional codecs:
+# .
+#  * ARIB STD-B24 Captions (Subtitle Decoder)
+#  * OpenCORE Adaptive Multi-Rate (AMR) Narrow-Band (Encoder/Decoder)
+#  * OpenCORE Adaptive Multi-Rate (AMR) Wide-Band (Decoder)
+#  * Android VisualOn Adaptive Multi-Rate (AMR) Wide-Band (Encoder)
+# .
+# Because this package links against libraries that are licensed under
+# Apache License 2.0, the resulting binaries are distributed under the
+# GPL version 3 or later.
 
-Package: libavcodec-extra
-Architecture: all
-Section: metapackages
-Multi-Arch: foreign
-Depends:
- libavcodec-extra58,
- ${misc:Depends}
-Description: FFmpeg library with extra codecs (metapackage)
- FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
- mux, demux, stream, filter and play pretty much anything that humans and
- machines have created. It supports the most obscure ancient formats up to the
- cutting edge.
- .
- This metapackage depends on the latest version of the libavcodec variant
- that offers additional codec support. Application packages can depend
- on it if they require or suggest this variant in a robust manner.
+#Package: libavcodec-extra
+#Architecture: all
+#Section: metapackages
+#Multi-Arch: foreign
+#Depends:
+# libavcodec-extra58,
+# ${misc:Depends}
+#Description: FFmpeg library with extra codecs (metapackage)
+# FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
+# mux, demux, stream, filter and play pretty much anything that humans and
+# machines have created. It supports the most obscure ancient formats up to the
+# cutting edge.
+# .
+# This metapackage depends on the latest version of the libavcodec variant
+# that offers additional codec support. Application packages can depend
+# on it if they require or suggest this variant in a robust manner.
 
 
 Package: libavcodec-dev
@@ -397,55 +397,55 @@ Description: FFmpeg library containing media filters - runtime files
  .
  This package contains the runtime files.
 
-Package: libavfilter-extra7
-Architecture: any
-Section: libs
-Multi-Arch: same
-Conflicts: libavfilter7
-Provides:
- libavfilter7 (= ${binary:Version}),
- libavfilter-extra
-Pre-Depends:
- ${misc:Pre-Depends}
-Depends:
- ${shlibs:Depends},
- ${misc:Depends}
-Description: FFmpeg library with extra media filters - runtime files
- FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
- mux, demux, stream, filter and play pretty much anything that humans and
- machines have created. It supports the most obscure ancient formats up to the
- cutting edge.
- .
- This library provides a generic audio/video filtering framework containing
- several filters, sources and sinks.
- .
- This package replaces the libavfilter6 package and contains the
- following additional filters:
- .
-  * Lens correction using Lensfun
-  * Optical Character Recognition (uses Tesseract)
-  * SOFAlizer (Spatially Oriented Format for Acoustics, uses netcdf)
- .
- Because this package links against libraries that are licensed under
- Apache License 2.0, the resulting binaries are distributed under the
- GPL version 3 or later.
+#Package: libavfilter-extra7
+#Architecture: any
+#Section: libs
+#Multi-Arch: same
+#Conflicts: libavfilter7
+#Provides:
+# libavfilter7 (= ${binary:Version}),
+# libavfilter-extra
+#Pre-Depends:
+# ${misc:Pre-Depends}
+#Depends:
+# ${shlibs:Depends},
+# ${misc:Depends}
+#Description: FFmpeg library with extra media filters - runtime files
+# FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
+# mux, demux, stream, filter and play pretty much anything that humans and
+# machines have created. It supports the most obscure ancient formats up to the
+# cutting edge.
+# .
+# This library provides a generic audio/video filtering framework containing
+# several filters, sources and sinks.
+# .
+# This package replaces the libavfilter6 package and contains the
+# following additional filters:
+# .
+#  * Lens correction using Lensfun
+#  * Optical Character Recognition (uses Tesseract)
+#  * SOFAlizer (Spatially Oriented Format for Acoustics, uses netcdf)
+# .
+# Because this package links against libraries that are licensed under
+# Apache License 2.0, the resulting binaries are distributed under the
+# GPL version 3 or later.
 
-Package: libavfilter-extra
-Architecture: all
-Section: metapackages
-Multi-Arch: foreign
-Depends:
- libavfilter-extra7,
- ${misc:Depends}
-Description: FFmpeg library with extra filters (metapackage)
- FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
- mux, demux, stream, filter and play pretty much anything that humans and
- machines have created. It supports the most obscure ancient formats up to the
- cutting edge.
- .
- This metapackage depends on the latest version of the libavfilter variant
- that offers additional filter support. Application packages can depend
- on it if they require or suggest this variant in a robust manner.
+#Package: libavfilter-extra
+#Architecture: all
+#Section: metapackages
+#Multi-Arch: foreign
+#Depends:
+# libavfilter-extra7,
+# ${misc:Depends}
+#Description: FFmpeg library with extra filters (metapackage)
+# FFmpeg is the leading multimedia framework, able to decode, encode, transcode,
+# mux, demux, stream, filter and play pretty much anything that humans and
+# machines have created. It supports the most obscure ancient formats up to the
+# cutting edge.
+# .
+# This metapackage depends on the latest version of the libavfilter variant
+# that offers additional filter support. Application packages can depend
+# on it if they require or suggest this variant in a robust manner.
 
 Package: libavfilter-dev
 Architecture: any

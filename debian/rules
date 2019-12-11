@@ -17,7 +17,8 @@ export DEB_LDFLAGS_MAINT_STRIP=-Wl,-Bsymbolic-functions
 # Package name for the extra flavor.
 SHLIB_PKGS := $(shell sed -nr '/extra/! s/^Package:[[:space:]]*(lib.*[0-9]+)[[:space:]]*$$/\1/p' debian/control)
 EXTRA_PKGS := $(shell sed -nr 's/^Package:[[:space:]]*(.*extra[0-9]+)[[:space:]]*$$/\1/p' debian/control)
-FLAVORS = standard extra static
+#FLAVORS = standard extra static
+FLAVORS = standard
 
 # Enable as many features as possible, as long as the result is still GPLv2+ (a GPLv3+ variant is built as libavcodec-extra/libavfilter-extra flavor).
 # The following flags (and build-dependencies) are not added, because they would require a libavformat-extra flavor:
@@ -49,6 +50,42 @@ FLAVORS = standard extra static
 #   --enable-opencl                 This is considered an experimental API.
 #   --enable-opencv                 Does not build with OpenCV >= 3.4
 #   --enable-pocketsphinx           see #941377: package dependencies are slightly broken
+# The following flags are disabled for the minimal BigBlueButton build
+#	--enable-avisynth \
+#	--enable-ladspa \
+#	--enable-libaom \
+#	--enable-libass \
+#	--enable-libbluray \
+#	--enable-libbs2b \
+#	--enable-libcaca \
+#	--enable-libcdio \
+#	--enable-libcodec2 \
+#	--enable-libflite \
+#	--enable-libgme \
+#	--enable-libgsm \
+#	--enable-libjack \
+#	--enable-libmysofa \
+#	--enable-libopenjpeg \
+#	--enable-libopenmpt \
+#	--enable-libpulse \
+#	--enable-libshine \
+#	--enable-libsnappy \
+#	--enable-libsoxr \
+#	--enable-libssh \
+#	--enable-libtheora \
+#	--enable-libtwolame \
+#	--enable-libvidstab \
+#	--enable-libwavpack \
+#	--enable-libwebp \
+#	--enable-libx265 \
+#	--enable-libxvid \
+#	--enable-libzmq \
+#	--enable-libzvbi \
+#	--enable-lv2 \
+#	--enable-omx \
+#	--enable-openal \
+#	--enable-opengl \
+
 CONFIG := --prefix=/usr \
 	--extra-version="$(DEB_REVISION)" \
 	--toolchain=hardened \
@@ -58,52 +95,18 @@ CONFIG := --prefix=/usr \
 	--enable-gpl \
 	--disable-stripping \
 	--enable-avresample --disable-filter=resample \
-	--enable-avisynth \
 	--enable-gnutls \
-	--enable-ladspa \
-	--enable-libaom \
-	--enable-libass \
-	--enable-libbluray \
-	--enable-libbs2b \
-	--enable-libcaca \
-	--enable-libcdio \
-	--enable-libcodec2 \
-	--enable-libflite \
 	--enable-libfontconfig \
 	--enable-libfreetype \
 	--enable-libfribidi \
-	--enable-libgme \
-	--enable-libgsm \
-	--enable-libjack \
 	--enable-libmp3lame \
-	--enable-libmysofa \
-	--enable-libopenjpeg \
-	--enable-libopenmpt \
 	--enable-libopus \
-	--enable-libpulse \
 	--enable-librsvg \
 	--enable-librubberband \
-	--enable-libshine \
-	--enable-libsnappy \
-	--enable-libsoxr \
 	--enable-libspeex \
-	--enable-libssh \
-	--enable-libtheora \
-	--enable-libtwolame \
-	--enable-libvidstab \
 	--enable-libvorbis \
 	--enable-libvpx \
-	--enable-libwavpack \
-	--enable-libwebp \
-	--enable-libx265 \
 	--enable-libxml2 \
-	--enable-libxvid \
-	--enable-libzmq \
-	--enable-libzvbi \
-	--enable-lv2 \
-	--enable-omx \
-	--enable-openal \
-	--enable-opengl \
 	--enable-sdl2
 
 # The standard configuration only uses the shared CONFIG.
@@ -141,21 +144,27 @@ ifneq ($(CXX),g++)
 endif
 
 # Some libraries are built only on linux.
+# BigBlueButton minimal build: disable
+#		--enable-libdc1394
+#		--enable-libiec61883
 ifeq ($(DEB_HOST_ARCH_OS),linux)
-	CONFIG += --enable-libdc1394 \
+	CONFIG += --disable-libdc1394 \
 		--enable-libdrm \
-		--enable-libiec61883
+		--disable-libiec61883
 endif
 
 # ffmpeg is involved in build-dependency cycles with x264 and chromaprint, so disable them in stage one.
 # Also disable frei0r, which build-depends on opencv.
+# BigBlueButton minimal build: always disable chromaprint/frei0r
+# 		--enable-chromaprint \
+# 		--enable-frei0r
 ifneq ($(filter pkg.ffmpeg.stage1,$(DEB_BUILD_PROFILES)),)
 	CONFIG += --disable-frei0r \
 		--disable-chromaprint \
 		--disable-libx264
 else
-	CONFIG += --enable-chromaprint \
-		--enable-frei0r \
+	CONFIG += --disable-chromaprint \
+		--disable-frei0r \
 		--enable-libx264
 endif
 
