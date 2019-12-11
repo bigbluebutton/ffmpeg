@@ -1,3 +1,9 @@
+ffmpeg (7:4.2.1-2ubuntu1bbb1~ubuntu16.04) xenial; urgency=medium
+
+  * Minimal build for BigBlueButton
+
+ -- Calvin Walton <cwalton@trusty-vm>  Wed, 11 Dec 2019 14:20:16 -0500
+
 ffmpeg (7:4.2.1-2ubuntu1) focal; urgency=medium
 
   * Make autopkgtests cross-test-friendly.
