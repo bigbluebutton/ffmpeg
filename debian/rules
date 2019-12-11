@@ -287,7 +287,7 @@ ifeq ($(DEB_HOST_ARCH),powerpc)
 	install -m 644 debian/altivec-extra/*/*.so.* debian/tmp/extra/usr/lib/$(DEB_HOST_MULTIARCH)/altivec
 endif
 	# Use the static libraries from the --disable-pic build
-	install -m 644 debian/static/*/lib*.a debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+	#install -m 644 debian/static/*/lib*.a debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
 
 override_dh_auto_install-indep:
 	$(MAKE) -C debian/standard DESTDIR=$(CURDIR)/debian/tmp install-doc install-examples
