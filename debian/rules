@@ -281,7 +281,7 @@ ifeq ($(DEB_HOST_ARCH),powerpc)
 	install -d debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/altivec
 	install -m 644 debian/altivec/*/*.so.* debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/altivec
 endif
-	dh_auto_install -a --sourcedirectory=debian/extra --destdir=debian/tmp/extra
+	#dh_auto_install -a --sourcedirectory=debian/extra --destdir=debian/tmp/extra
 ifeq ($(DEB_HOST_ARCH),powerpc)
 	install -d debian/tmp/extra/usr/lib/$(DEB_HOST_MULTIARCH)/altivec
 	install -m 644 debian/altivec-extra/*/*.so.* debian/tmp/extra/usr/lib/$(DEB_HOST_MULTIARCH)/altivec
