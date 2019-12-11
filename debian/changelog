@@ -1,4 +1,4 @@
-ffmpeg (7:4.2.1-2ubuntu1bbb2~ubuntu16.04) xenial; urgency=medium
+ffmpeg (7:4.2.1-2ubuntu1bbb2~ubuntu18.04) bionic; urgency=medium
 
   * Minimal build for BigBlueButton
 
