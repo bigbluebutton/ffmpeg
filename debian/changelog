@@ -1,4 +1,4 @@
-ffmpeg (7:4.2.1-2ubuntu1bbb3) focal; urgency=medium
+ffmpeg (7:4.2.1-2ubuntu1bbb3~ubuntu16.04) xenial; urgency=medium
 
   * Reduce the amount of stuff built in to the ffmpeg
   * Disable running tests (require features that aren't enabled)
