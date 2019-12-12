@@ -85,7 +85,7 @@ FLAVORS = standard
 #	--enable-omx \
 #	--enable-openal \
 #	--enable-opengl \
-
+# BigBlueButton: Add options to strip down the enabled features.
 CONFIG := --prefix=/usr \
 	--extra-version="$(DEB_REVISION)" \
 	--toolchain=hardened \
@@ -107,7 +107,27 @@ CONFIG := --prefix=/usr \
 	--enable-libvorbis \
 	--enable-libvpx \
 	--enable-libxml2 \
-	--enable-sdl2
+	--enable-sdl2 \
+	--disable-decoders \
+	--enable-decoder=aac,ass,bmp,ffv1,ffvhuff,flac,flashsv,flashsv2,flv,gif,h264,huffyuv,librsvg,libspeex,mjpeg,mp3float,mpeg2video,opus,pcm_f32le,pcm_s16le,pcm_s16le_planar,png,rawvideo,srt,ssa,subrip,vorbis,vp6,vp6a,vp6f,vp8,vp9,webp,webvtt \
+	--disable-encoders \
+	--enable-encoder=aac,ass,bmp,ffv1,ffvhuff,flac,flashsv,flashsv2,flv,gif,h264_vaapi,huffyuv,libmp3lame,libopus,libspeex,libvorbis,libvpx_vp8,libvpx_vp9,libx264,libx264rgb,mjpeg,mjpeg_vaapi,mpeg2_vaapi,mpeg2video,pcm_f32le,pcm_s16le,pcm_s16le_planar,png,rawvideo,srt,ssa,subrip,vp8_vaapi,vp9_vaapi,webvtt \
+	--disable-hwaccels \
+	--enable-hwaccel=h264_vaapi,h264_vdpau,mjpeg_vaapi,mpeg2_vaapi,mpeg2_vdpau,vp8_vaapi,vp9_vaapi \
+	--disable-parsers \
+	--enable-parser=aac,bmp,flac,gif,h264,mjpeg,mpegaudio,mpegvideo,opus,png,vorbis,vp8,vp9 \
+	--disable-demuxers \
+	--enable-demuxer=aac,alsa,ass,avi,bmp_pipe,caf,concat,dash,ffmetadata,flac,flv,gif,gif_pipe,h264,hls,image2,image2pipe,ivf,jpeg_pipe,kmsgrab,lavfi,matroska,mjpeg,mov,mp3,mpegts,mpegtsraw,nut,ogg,pcm_f32le,pcm_s16le,png_pipe,pulse,rawvideo,rtp,rtsp,srt,swf,w64,wav,webvtt,yuv4mpegpipe \
+	--disable-muxers \
+	--enable-muxer=adts,ass,avi,caf,dash,ffmetadata,flac,flv,framecrc,framehash,framemd5,gif,h264,hash,hls,image2,image2pipe,ipod,ivf,matroska,matroska_audio,md5,mjpeg,mkvtimestamp_v2,mov,mp3,mp4,mpeg2video,mpegts,nut,oga,ogg,ogv,opus,pcm_f32le,pcm_s16le,rawvideo,rtp,rtp_mpegts,rtsp,segment,singlejpeg,srt,stream_segment,swf,tee,uncodedframecrc,w64,wav,webm,webm_chunk,webm_dash_manifest,webvtt,yuv4mpegpipe \
+	--disable-protocols \
+	--enable-protocol=async,cache,concat,data,file,hls,http,httpproxy,https,icecast,md5,pipe,rtmp,rtmps,rtmpt,rtmpts,rtp,subfile,tcp,tee,tls,udp,unix \
+	--disable-bsfs \
+	--enable-bsf=aac_adtstoasc,chomp,filter_units,h264_metadata,h264_mp4toannexb,h264_redundant_pps,mjpeg2jpeg,mpeg2_metadata,noise,null,vp9_metadata,vp9_raw_reorder,vp9_superframe,vp9_superframe_split\
+	--disable-indevs \
+	--enable-indev=alsa,lavfi,v4l2,fbdev,xcbgrab,kmsgrab \
+	--disable-outdevs \
+	--enable-outdev=alsa,sdl2,xv,fbdev,v4l2
 
 # The standard configuration only uses the shared CONFIG.
 CONFIG_standard = --enable-shared
@@ -269,8 +289,9 @@ override_dh_auto_build-arch:
 
 # Set the library path for the dynamic linker, because the tests otherwise don't find the libraries.
 override_dh_auto_test-arch:
-	export LD_LIBRARY_PATH="libavcodec:libavdevice:libavfilter:libavformat:libavresample:libavutil:libpostproc:libswresample:libswscale"; \
-		dh_auto_test -a --sourcedirectory=debian/standard -- -k
+	:
+	#export LD_LIBRARY_PATH="libavcodec:libavdevice:libavfilter:libavformat:libavresample:libavutil:libpostproc:libswresample:libswscale"; \
+	#	dh_auto_test -a --sourcedirectory=debian/standard -- -k
 
 # No tests for indep build.
 override_dh_auto_test-indep:
