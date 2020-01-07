@@ -1,3 +1,9 @@
+ffmpeg (7:4.2.2-1bbb1) bionic; urgency=medium
+
+  * New upstream version 4.2.2
+
+ -- Calvin Walton <calvin.walton@kepstin.ca>  Tue, 07 Jan 2020 15:57:11 -0500
+
 ffmpeg (7:4.2.1-2ubuntu1bbb3) focal; urgency=medium
 
   * Reduce the amount of stuff built in to the ffmpeg
