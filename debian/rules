@@ -25,7 +25,6 @@ FLAVORS = standard extra static
 # The following flags are not added, because the necessary libraries are not in Debian:
 #   --enable-decklink
 #   --enable-libcelt                (see #676592: removed from Debian as abandoned upstream, replaced by opus)
-#   --enable-libdav1d
 #   --enable-libdavs2               (only in experimental)
 #   --enable-libilbc                (see #675959 for the RFP bug)
 #   --enable-libklvanc
@@ -68,6 +67,7 @@ CONFIG := --prefix=/usr \
 	--enable-libcaca \
 	--enable-libcdio \
 	--enable-libcodec2 \
+	--enable-libdav1d \
 	--enable-libflite \
 	--enable-libfontconfig \
 	--enable-libfreetype \
