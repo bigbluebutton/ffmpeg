@@ -912,12 +912,17 @@ static av_cold void nvenc_setup_rate_control(AVCodecContext *avctx)
     if (ctx->zerolatency)
         ctx->encode_config.rcParams.zeroReorderDelay = 1;
 
-    if (ctx->quality)
-    {
+    if (ctx->quality) {
         //convert from float to fixed point 8.8
         int tmp_quality = (int)(ctx->quality * 256.0f);
         ctx->encode_config.rcParams.targetQuality = (uint8_t)(tmp_quality >> 8);
         ctx->encode_config.rcParams.targetQualityLSB = (uint8_t)(tmp_quality & 0xff);
+
+        av_log(avctx, AV_LOG_VERBOSE, "CQ(%d) mode enabled.\n", tmp_quality);
+
+        //CQ mode shall discard avg bitrate & honor max bitrate;
+        ctx->encode_config.rcParams.averageBitRate = avctx->bit_rate = 0;
+        ctx->encode_config.rcParams.maxBitRate = avctx->rc_max_rate;
     }
 }
 
@@ -1164,8 +1169,13 @@ static av_cold int nvenc_setup_encoder(AVCodecContext *avctx)
     ctx->init_encode_params.darHeight = dh;
     ctx->init_encode_params.darWidth = dw;
 
-    ctx->init_encode_params.frameRateNum = avctx->time_base.den;
-    ctx->init_encode_params.frameRateDen = avctx->time_base.num * avctx->ticks_per_frame;
+    if (avctx->framerate.num > 0 && avctx->framerate.den > 0) {
+        ctx->init_encode_params.frameRateNum = avctx->framerate.num;
+        ctx->init_encode_params.frameRateDen = avctx->framerate.den;
+    } else {
+        ctx->init_encode_params.frameRateNum = avctx->time_base.den;
+        ctx->init_encode_params.frameRateDen = avctx->time_base.num * avctx->ticks_per_frame;
+    }
 
     ctx->init_encode_params.enableEncodeAsync = 0;
     ctx->init_encode_params.enablePTD = 1;
@@ -1783,10 +1793,11 @@ static int nvenc_set_timestamp(AVCodecContext *avctx,
         pkt->dts = ts0 - delta;
 
         ctx->first_packet_output = 1;
-        return 0;
+    } else {
+        pkt->dts = timestamp_queue_dequeue(ctx->timestamp_list);
     }
 
-    pkt->dts = timestamp_queue_dequeue(ctx->timestamp_list);
+    pkt->dts -= avctx->max_b_frames;
 
     return 0;
 }

@@ -5,4 +5,4 @@ Tests: encdec
 Depends: ffmpeg
 
 Tests: encdec-extra
-Depends: ffmpeg, libavcodec-extra58
+Depends: ffmpeg, libavcodec-extra
