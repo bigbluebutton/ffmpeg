@@ -1,8 +1,48 @@
-ffmpeg (7:4.2.2-1bbb1~ubuntu16.04) xenial; urgency=medium
+ffmpeg (7:4.2.4-1ubuntu0.1bbb1~16.04) xenial; urgency=medium
 
-  * New upstream version 4.2.2
+  * Enable the libopus decoder
 
- -- Calvin Walton <calvin.walton@kepstin.ca>  Tue, 07 Jan 2020 15:57:11 -0500
+ -- Calvin Walton <cwalton@trusty-vm>  Wed, 30 Sep 2020 14:13:41 -0400
+
+ffmpeg (7:4.2.4-1ubuntu0.1) focal-security; urgency=medium
+
+  * SECURITY UPDATE: New upstream bugfix release.
+    - Fixes CVE-2019-13312, CVE-2020-12284 and CVE-2020-13904.
+
+ -- Eduardo Barretto <eduardo.barretto@canonical.com>  Thu, 16 Jul 2020 12:04:07 -0300
+
+ffmpeg (7:4.2.2-1ubuntu1) focal; urgency=medium
+
+  * Build with external nv-codec-headers for NVENC accelerated video
+    encoding. (LP: #1810649)
+    - debian/control:
+      + Add B-D libffmpeg-nvenc-dev
+    - debian/rules:
+      + Add --enable-nvenc for amd64 only
+
+ -- Martin Wimpress <martin.wimpress@ubuntu.com>  Sat, 07 Mar 2020 08:39:35 +0000
+
+ffmpeg (7:4.2.2-1build1) focal; urgency=medium
+
+  * No-change rebuild for libmysofa soname change.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 13 Feb 2020 02:12:37 +0100
+
+ffmpeg (7:4.2.2-1) unstable; urgency=medium
+
+  [ James Cowgill ]
+  * New upstream release.
+
+  * d/control:
+    - Change lib*-extra packages to arch any.
+    - Tighten dependencies from libav*-extra packages.
+    - Bump standards version to 4.5.0.
+  * d/rules: Enable opencl (Closes: #944005)
+
+  [ Steve Langasek ]
+  * d/tests: Make autopkgtests cross-test-friendly. (Closes: #946241)
+
+ -- James Cowgill <jcowgill@debian.org>  Sat, 25 Jan 2020 16:22:32 +0000
 
 ffmpeg (7:4.2.1-2ubuntu1bbb3~ubuntu16.04) xenial; urgency=medium
 
@@ -16,12 +56,6 @@ ffmpeg (7:4.2.1-2ubuntu1bbb2~ubuntu16.04) xenial; urgency=medium
   * Minimal build for BigBlueButton
 
  -- Calvin Walton <calvin.walton@kepstin.ca>  Wed, 11 Dec 2019 14:20:16 -0500
-
-ffmpeg (7:4.2.1-2ubuntu1) focal; urgency=medium
-
-  * Make autopkgtests cross-test-friendly.
-
- -- Steve Langasek <steve.langasek@ubuntu.com>  Thu, 05 Dec 2019 17:34:27 -0800
 
 ffmpeg (7:4.2.1-2) unstable; urgency=medium
 
