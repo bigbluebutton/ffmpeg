@@ -1,3 +1,9 @@
+ffmpeg (7:4.2.4-1ubuntu0.1bbb2) focal; urgency=medium
+
+  * Disable nvenc
+
+ -- Calvin Walton <calvin.walton@kepstin.ca>  Wed, 30 Sep 2020 15:29:29 -0400
+
 ffmpeg (7:4.2.4-1ubuntu0.1bbb1) focal; urgency=medium
 
   * Enable the libopus decoder
