@@ -2,7 +2,7 @@ ffmpeg (7:4.2.4-1ubuntu0.1bbb1~16.04) xenial; urgency=medium
 
   * Enable the libopus decoder
 
- -- Calvin Walton <cwalton@trusty-vm>  Wed, 30 Sep 2020 14:13:41 -0400
+ -- Calvin Walton <calvin.walton@kepstin.ca>  Wed, 30 Sep 2020 14:13:41 -0400
 
 ffmpeg (7:4.2.4-1ubuntu0.1) focal-security; urgency=medium
 
