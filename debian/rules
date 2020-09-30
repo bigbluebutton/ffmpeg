@@ -173,9 +173,9 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
 endif
 
 # Enable nvenc on amd64 only; not supported on other architectures.
-ifeq ($(DEB_HOST_ARCH),amd64)
-	CONFIG += --enable-nvenc
-endif
+#ifeq ($(DEB_HOST_ARCH),amd64)
+#	CONFIG += --enable-nvenc
+#endif
 
 # ffmpeg is involved in build-dependency cycles with x264 and chromaprint, so disable them in stage one.
 # Also disable frei0r, which build-depends on opencv.
