@@ -47,7 +47,6 @@ FLAVORS = standard
 #   --enable-libsrt                 see #933180: links against OpenSSL (license incompatibility)
 #   --enable-libv4l2                This is only needed for very old devices and may cause problems for others.
 #                                   Should anyone need it, using LD_PRELOAD pointing on libv4l2 has the same effect.
-#   --enable-opencl                 This is considered an experimental API.
 #   --enable-opencv                 Does not build with OpenCV >= 3.4
 #   --enable-pocketsphinx           see #941377: package dependencies are slightly broken
 # The following flags are disabled for the minimal BigBlueButton build
@@ -109,7 +108,7 @@ CONFIG := --prefix=/usr \
 	--enable-libxml2 \
 	--enable-sdl2 \
 	--disable-decoders \
-	--enable-decoder=aac,ass,bmp,ffv1,ffvhuff,flac,flashsv,flashsv2,flv,gif,h264,huffyuv,librsvg,libspeex,mjpeg,mp3float,mpeg2video,opus,pcm_f32le,pcm_s16le,pcm_s16le_planar,png,rawvideo,srt,ssa,subrip,vorbis,vp6,vp6a,vp6f,vp8,vp9,webp,webvtt \
+	--enable-decoder=aac,ass,bmp,ffv1,ffvhuff,flac,flashsv,flashsv2,flv,gif,h264,huffyuv,libopus,librsvg,libspeex,mjpeg,mp3float,mpeg2video,opus,pcm_f32le,pcm_s16le,pcm_s16le_planar,png,rawvideo,srt,ssa,subrip,vorbis,vp6,vp6a,vp6f,vp8,vp9,webp,webvtt \
 	--disable-encoders \
 	--enable-encoder=aac,ass,bmp,ffv1,ffvhuff,flac,flashsv,flashsv2,flv,gif,h264_vaapi,huffyuv,libmp3lame,libopus,libspeex,libvorbis,libvpx_vp8,libvpx_vp9,libx264,libx264rgb,mjpeg,mjpeg_vaapi,mpeg2_vaapi,mpeg2video,pcm_f32le,pcm_s16le,pcm_s16le_planar,png,rawvideo,srt,ssa,subrip,vp8_vaapi,vp9_vaapi,webvtt \
 	--disable-hwaccels \
@@ -173,6 +172,11 @@ ifeq ($(DEB_HOST_ARCH_OS),linux)
 		--disable-libiec61883
 endif
 
+# Enable nvenc on amd64 only; not supported on other architectures.
+#ifeq ($(DEB_HOST_ARCH),amd64)
+#	CONFIG += --enable-nvenc
+#endif
+
 # ffmpeg is involved in build-dependency cycles with x264 and chromaprint, so disable them in stage one.
 # Also disable frei0r, which build-depends on opencv.
 # BigBlueButton minimal build: always disable chromaprint/frei0r
@@ -206,6 +210,8 @@ endif
 ifneq (,$(filter $(DEB_HOST_ARCH),x32))
 	CONFIG += --disable-asm
 endif
+
+
 
 # Disable some optimizations on mips*, because they are not always available on these architectures
 ifneq (,$(filter mips%r6 mips%r6el, $(DEB_HOST_ARCH)))
