@@ -1,3 +1,9 @@
+ffmpeg (7:4.2.4-1ubuntu0.1bbb1) focal; urgency=medium
+
+  * Enable the libopus decoder
+
+ -- Calvin Walton <cwalton@trusty-vm>  Wed, 30 Sep 2020 14:13:41 -0400
+
 ffmpeg (7:4.2.4-1ubuntu0.1) focal-security; urgency=medium
 
   * SECURITY UPDATE: New upstream bugfix release.
