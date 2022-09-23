@@ -101,6 +101,9 @@ static int get_aiff_header(AVFormatContext *s, int size,
     int sample_rate;
     unsigned int num_frames;
 
+    if (size == INT_MAX)
+        return AVERROR_INVALIDDATA;
+
     if (size & 1)
         size++;
     par->codec_type = AVMEDIA_TYPE_AUDIO;
@@ -118,7 +121,12 @@ static int get_aiff_header(AVFormatContext *s, int size,
         sample_rate = val << exp;
     else
         sample_rate = (val + (1ULL<<(-exp-1))) >> -exp;
+    if (sample_rate <= 0)
+        return AVERROR_INVALIDDATA;
+
     par->sample_rate = sample_rate;
+    if (size < 18)
+        return AVERROR_INVALIDDATA;
     size -= 18;
 
     /* get codec id for AIFF-C */
@@ -178,8 +186,10 @@ static int get_aiff_header(AVFormatContext *s, int size,
         par->block_align = (av_get_bits_per_sample(par->codec_id) * par->channels) >> 3;
 
     if (aiff->block_duration) {
-        par->bit_rate = (int64_t)par->sample_rate * (par->block_align << 3) /
-                        aiff->block_duration;
+        par->bit_rate = av_rescale(par->sample_rate, par->block_align * 8LL,
+                                   aiff->block_duration);
+        if (par->bit_rate < 0)
+            par->bit_rate = 0;
     }
 
     /* Chunk is over */
@@ -282,6 +292,8 @@ static int aiff_read_header(AVFormatContext *s)
             get_meta(s, "comment"  , size);
             break;
         case MKTAG('S', 'S', 'N', 'D'):     /* Sampled sound chunk */
+            if (size < 8)
+                return AVERROR_INVALIDDATA;
             aiff->data_end = avio_tell(pb) + size;
             offset = avio_rb32(pb);      /* Offset of sound data */
             avio_rb32(pb);               /* BlockSize... don't care */
@@ -352,7 +364,7 @@ got_sound:
     if (!st->codecpar->block_align && st->codecpar->codec_id == AV_CODEC_ID_QCELP) {
         av_log(s, AV_LOG_WARNING, "qcelp without wave chunk, assuming full rate\n");
         st->codecpar->block_align = 35;
-    } else if (!st->codecpar->block_align) {
+    } else if (st->codecpar->block_align <= 0) {
         av_log(s, AV_LOG_ERROR, "could not find COMM tag or invalid block_align value\n");
         return -1;
     }
@@ -398,6 +410,8 @@ static int aiff_read_packet(AVFormatContext *s,
         break;
     default:
         size = st->codecpar->block_align ? (MAX_SIZE / st->codecpar->block_align) * st->codecpar->block_align : MAX_SIZE;
+        if (!size)
+            return AVERROR_INVALIDDATA;
     }
     size = FFMIN(max_size, size);
     res = av_get_packet(s->pb, pkt, size);
