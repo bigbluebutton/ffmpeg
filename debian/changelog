@@ -10,7 +10,7 @@ ffmpeg (7:4.2.7-0ubuntu0.1bbb1~18.04) bionic; urgency=medium
       CVE-2020-22035, CVE-2020-22036, CVE-2020-22037, CVE-2020-22042,
       CVE-2020-35965, CVE-2021-38114, CVE-2021-38171 and CVE-2021-38291.
 
- -- Luís Infante da Câmara <luis.infante.da.camara@tecnico.ulisboa.pt>  Wed, 18 May 2022 22:24:26 +0100
+ -- Calvin Walton <calvin.walton@kepstin.ca>  Wed, 18 May 2022 22:24:26 +0100
 
 ffmpeg (7:4.2.4-1ubuntu0.1bbb2~18.04) bionic; urgency=medium
 
