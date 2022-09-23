@@ -125,8 +125,9 @@ static int cbs_av1_write_uvlc(CodedBitstreamContext *ctx, PutBitContext *pbc,
         put_bits(pbc, 1, 1);
     } else {
         zeroes = av_log2(value + 1);
-        v = value - (1 << zeroes) + 1;
-        put_bits(pbc, zeroes + 1, 1);
+        v = value - (1U << zeroes) + 1;
+        put_bits(pbc, zeroes, 0);
+        put_bits(pbc, 1, 1);
         put_bits(pbc, zeroes, v);
     }
 
@@ -169,6 +170,9 @@ static int cbs_av1_read_leb128(CodedBitstreamContext *ctx, GetBitContext *gbc,
         if (!(byte & 0x80))
             break;
     }
+
+    if (value > UINT32_MAX)
+        return AVERROR_INVALIDDATA;
 
     if (ctx->trace_enable)
         ff_cbs_trace_syntax_element(ctx, position, name, NULL, "", value);

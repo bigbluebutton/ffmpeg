@@ -2748,7 +2748,14 @@ static int vp3_decode_frame(AVCodecContext *avctx,
             skip_bits(&gb, 4); /* width code */
             skip_bits(&gb, 4); /* height code */
             if (s->version) {
-                s->version = get_bits(&gb, 5);
+                int version = get_bits(&gb, 5);
+#if !CONFIG_VP4_DECODER
+                if (version >= 2) {
+                    av_log(avctx, AV_LOG_ERROR, "This build does not support decoding VP4.\n");
+                    return AVERROR_DECODER_NOT_FOUND;
+                }
+#endif
+                s->version = version;
                 if (avctx->frame_number == 0)
                     av_log(s->avctx, AV_LOG_DEBUG,
                            "VP version: %d\n", s->version);
@@ -2959,6 +2966,9 @@ static int theora_decode_header(AVCodecContext *avctx, GetBitContext *gb)
     uint8_t offset_x = 0, offset_y = 0;
     int ret;
     AVRational fps, aspect;
+
+    if (get_bits_left(gb) < 206)
+        return AVERROR_INVALIDDATA;
 
     s->theora_header = 0;
     s->theora = get_bits_long(gb, 24);

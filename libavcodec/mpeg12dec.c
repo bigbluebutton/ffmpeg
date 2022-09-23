@@ -220,7 +220,6 @@ end:
 }
 
 /**
- * Note: this function can read out of range and crash for corrupt streams.
  * Changing this would eat up any speed benefits it has.
  * Do not use "fast" flag if you need the code to be robust.
  */
@@ -396,7 +395,6 @@ end:
 }
 
 /**
- * Note: this function can read out of range and crash for corrupt streams.
  * Changing this would eat up any speed benefits it has.
  * Do not use "fast" flag if you need the code to be robust.
  */
@@ -558,7 +556,6 @@ static inline int mpeg2_decode_block_intra(MpegEncContext *s,
 }
 
 /**
- * Note: this function can read out of range and crash for corrupt streams.
  * Changing this would eat up any speed benefits it has.
  * Do not use "fast" flag if you need the code to be robust.
  */
@@ -586,7 +583,7 @@ static inline int mpeg2_fast_decode_block_intra(MpegEncContext *s,
     dc = s->last_dc[component];
     dc += diff;
     s->last_dc[component] = dc;
-    block[0] = dc << (3 - s->intra_dc_precision);
+    block[0] = dc * (1 << (3 - s->intra_dc_precision));
     i = 0;
     if (s->intra_vlc_format)
         rl = &ff_rl_mpeg2;
@@ -1540,6 +1537,10 @@ static void mpeg_decode_picture_coding_extension(Mpeg1Context *s1)
     s->mpeg_f_code[0][1] = get_bits(&s->gb, 4);
     s->mpeg_f_code[1][0] = get_bits(&s->gb, 4);
     s->mpeg_f_code[1][1] = get_bits(&s->gb, 4);
+    s->mpeg_f_code[0][0] += !s->mpeg_f_code[0][0];
+    s->mpeg_f_code[0][1] += !s->mpeg_f_code[0][1];
+    s->mpeg_f_code[1][0] += !s->mpeg_f_code[1][0];
+    s->mpeg_f_code[1][1] += !s->mpeg_f_code[1][1];
     if (!s->pict_type && s1->mpeg_enc_ctx_allocated) {
         av_log(s->avctx, AV_LOG_ERROR,
                "Missing picture start code, guessing missing values\n");
@@ -1553,10 +1554,6 @@ static void mpeg_decode_picture_coding_extension(Mpeg1Context *s1)
         s->current_picture.f->pict_type = s->pict_type;
         s->current_picture.f->key_frame = s->pict_type == AV_PICTURE_TYPE_I;
     }
-    s->mpeg_f_code[0][0] += !s->mpeg_f_code[0][0];
-    s->mpeg_f_code[0][1] += !s->mpeg_f_code[0][1];
-    s->mpeg_f_code[1][0] += !s->mpeg_f_code[1][0];
-    s->mpeg_f_code[1][1] += !s->mpeg_f_code[1][1];
 
     s->intra_dc_precision         = get_bits(&s->gb, 2);
     s->picture_structure          = get_bits(&s->gb, 2);
@@ -2483,7 +2480,7 @@ static int decode_chunks(AVCodecContext *avctx, AVFrame *picture,
                     return ret;
                 else if (ret) {
                     // FIXME: merge with the stuff in mpeg_decode_slice
-                    if (s2->last_picture_ptr || s2->low_delay)
+                    if (s2->last_picture_ptr || s2->low_delay || s2->pict_type == AV_PICTURE_TYPE_B)
                         *got_output = 1;
                 }
             }

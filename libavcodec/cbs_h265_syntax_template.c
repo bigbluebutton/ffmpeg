@@ -80,7 +80,7 @@ static int FUNC(extension_data)(CodedBitstreamContext *ctx, RWContext *rw,
     }
 #else
     for (k = 0; k < current->bit_length; k++)
-        xu(1, extension_data, current->data[k / 8] >> (7 - k % 8), 0, 1, 0);
+        xu(1, extension_data, current->data[k / 8] >> (7 - k % 8) & 1, 0, 1, 0);
 #endif
     return 0;
 }
@@ -601,6 +601,8 @@ static int FUNC(st_ref_pic_set)(CodedBitstreamContext *ctx, RWContext *rw,
             }
         }
 
+        if (i > 15)
+            return AVERROR_INVALIDDATA;
         infer(num_negative_pics, i);
         for (i = 0; i < current->num_negative_pics; i++) {
             infer(delta_poc_s0_minus1[i],
@@ -630,6 +632,8 @@ static int FUNC(st_ref_pic_set)(CodedBitstreamContext *ctx, RWContext *rw,
             }
         }
 
+        if (i + current->num_negative_pics > 15)
+            return AVERROR_INVALIDDATA;
         infer(num_positive_pics, i);
         for (i = 0; i < current->num_positive_pics; i++) {
             infer(delta_poc_s1_minus1[i],
@@ -718,7 +722,7 @@ static int FUNC(sps_scc_extension)(CodedBitstreamContext *ctx, RWContext *rw,
 
         flag(sps_palette_predictor_initializer_present_flag);
         if (current->sps_palette_predictor_initializer_present_flag) {
-            ue(sps_num_palette_predictor_initializer_minus1, 0, 128);
+            ue(sps_num_palette_predictor_initializer_minus1, 0, 127);
             for (comp = 0; comp < (current->chroma_format_idc ? 3 : 1); comp++) {
                 int bit_depth = comp == 0 ? current->bit_depth_luma_minus8 + 8
                                           : current->bit_depth_chroma_minus8 + 8;
@@ -1367,7 +1371,7 @@ static int FUNC(slice_segment_header)(CodedBitstreamContext *ctx, RWContext *rw,
                     infer(num_long_term_sps, 0);
                     idx_size = 0;
                 }
-                ue(num_long_term_pics, 0, HEVC_MAX_LONG_TERM_REF_PICS);
+                ue(num_long_term_pics, 0, HEVC_MAX_REFS - current->num_long_term_sps);
 
                 for (i = 0; i < current->num_long_term_sps +
                                 current->num_long_term_pics; i++) {

@@ -73,6 +73,7 @@ typedef struct TiffContext {
     int fill_order;
     uint32_t res[4];
     int is_thumbnail;
+    unsigned last_tag;
 
     int is_bayer;
     uint8_t pattern[4];
@@ -933,6 +934,12 @@ static int tiff_decode_tag(TiffContext *s, AVFrame *frame)
     if (ret < 0) {
         goto end;
     }
+    if (tag <= s->last_tag)
+        return AVERROR_INVALIDDATA;
+
+    // We ignore TIFF_STRIP_SIZE as it is sometimes in the logic but wrong order around TIFF_STRIP_OFFS
+    if (tag != TIFF_STRIP_SIZE)
+        s->last_tag = tag;
 
     off = bytestream2_tell(&s->gb);
     if (count == 1) {
@@ -965,7 +972,7 @@ static int tiff_decode_tag(TiffContext *s, AVFrame *frame)
         s->height = value;
         break;
     case TIFF_BPP:
-        if (count > 5U) {
+        if (count > 5 || count <= 0) {
             av_log(s->avctx, AV_LOG_ERROR,
                    "This format is not supported (bpp=%d, %d components)\n",
                    value, count);
@@ -996,9 +1003,9 @@ static int tiff_decode_tag(TiffContext *s, AVFrame *frame)
                    "Samples per pixel requires a single value, many provided\n");
             return AVERROR_INVALIDDATA;
         }
-        if (value > 5U) {
+        if (value > 5 || value <= 0) {
             av_log(s->avctx, AV_LOG_ERROR,
-                   "Samples per pixel %d is too large\n", value);
+                   "Invalid samples per pixel %d\n", value);
             return AVERROR_INVALIDDATA;
         }
         if (s->bppcount == 1)
@@ -1430,6 +1437,7 @@ again:
     s->is_bayer    = 0;
     s->cur_page    = 0;
     s->tiff_type   = TIFF_TYPE_TIFF;
+    s->last_tag    = 0;
     free_geotags(s);
 
     // Reset these offsets so we can tell if they were set this frame
